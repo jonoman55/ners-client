@@ -1,58 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import { useContext } from 'react';
+import { Box, Container, Stack, Typography } from '@mui/material';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
-  );
-}
+import { SocketContext } from './contexts';
+
+// TODO : Create separate components
+const App: React.FC = () => {
+    const { socket, uid, users } = useContext(SocketContext).socketState;
+    return (
+        <Container maxWidth='lg'>
+            <Box sx={{ m: 1, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                <Typography component='h2' variant='h2' fontWeight='bold' gutterBottom>
+                    Socket IO Information
+                </Typography>
+                <Box sx={{ width: 'auto', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start' }}>
+                    <Stack direction='row' spacing={1} padding={1}>
+                        <Typography component='p'>Your User ID:</Typography>
+                        <Typography component='p' fontWeight='bold'>{uid}</Typography>
+                    </Stack>
+                    <Stack direction='row' spacing={1} padding={1}>
+                        <Typography component='p'>Users Online:</Typography>
+                        <Typography component='p' fontWeight='bold'>{users.length}</Typography>
+                    </Stack>
+                    <Stack direction='row' spacing={1} padding={1}>
+                        <Typography component='p'>Socket ID:</Typography>
+                        <Typography component='p' fontWeight='bold'>{socket?.id}</Typography>
+                    </Stack>
+                </Box>
+            </Box>
+        </Container>
+    );
+};
 
 export default App;
